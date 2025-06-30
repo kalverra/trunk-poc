@@ -25,11 +25,11 @@ jobs:
             - name: Download Dependencies
               run: go mod download
             - name: Run Tests
-              run: go tool gotestsum --format testname --junitfile=junit.xml -- -v ./...
+              run: go tool gotestsum --format testname --junitfile=junit.xml -- -v ./... -timeout 5s
             - name: Upload Test Results to Trunk.io
               if: ${{ !cancelled() }}
               uses: trunk-io/analytics-uploader@main
               with:
                 junit-paths: "**/junit.xml"        
                 org-slug: adam-test
-                token: ${{ secrets.TRUNK_TOKEN }}
+                token: ${{ secrets.TRUNK_API_TOKEN }}
